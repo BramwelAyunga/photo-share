@@ -1,0 +1,70 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: azurite_storage
+    restart: always
+    ports:
+      - "10000:10000"
+
+  api:
+    image: bramayunga/photoshare-api:latest
+    container_name: photoshare_api
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      DB_HOST: photoshare-mysql-server.mysql.database.azure.com
+      DB_PORT: 3306
+      DB_USER: media_app
+      DB_PASSWORD: PhotoShare@2026!
+      DB_NAME: media_platform
+      JWT_SECRET: father_Rethom
+      JWT_EXPIRES_IN: 1d
+      AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+      AZURE_STORAGE_CONTAINER_NAME: media
+      AZURE_STORAGE_BASE_URL: ${AZURE_STORAGE_BASE_URL}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: 6380
+      CLIENT_URL: ${CLIENT_URL}
+      SESSION_SECRET: father_earth
+    depends_on:
+      - mysql
+      - redis
+      - azurite
+    command: npm run dev
+
+  client:
+    image: bramayunga/photoshare-client:latest
+    ports:
+      - "80:80"
+
+volumes:
+  mysql_data:
+  redis_data:

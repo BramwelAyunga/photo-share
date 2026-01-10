@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  client:
+    image: bramayunga/photoshare-client:latest
+    container_name: photoshare_client
+    restart: always
+    ports:
+      - "80:80"

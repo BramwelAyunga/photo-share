@@ -1,0 +1,31 @@
+# Server Configuration
+PORT=3001
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=3307
+
+DB_USER=media_app
+DB_PASSWORD=str0N&Media
+DB_NAME=media_platform
+
+# JWT Configuration
+JWT_SECRET=father_Rethom
+JWT_EXPIRES_IN=1d
+
+# Azure Blob Storage Configuration
+AZURE_STORAGE_CONNECTION_STRING="DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;"
+AZURE_STORAGE_CONTAINER_NAME=azurite
+AZURE_STORAGE_BASE_URL="http://localhost:10000/devstoreaccount1"
+
+# Redis Configuration (for BullMQ)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+
+
+#client url
+CLIENT_URL=http://localhost:5173
+
+#session configuration
+SESSION_SECRET=father_earth
