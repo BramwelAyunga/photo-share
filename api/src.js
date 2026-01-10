@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require('./routes/auth');
 const mediaRoutes = require('./routes/media');
 
-// Routes
+// Routes fun
 app.use('/api/auth', authRoutes);
 app.use('/api/media', mediaRoutes);
 app.get('/', (req, res) => {
